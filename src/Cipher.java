@@ -1,15 +1,18 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Game {
+public class Cipher {
     private Encryption encryption;
+    private Decryption decryption;
     private Scanner scan = new Scanner(System.in);
     private String word;
     private String cipher;
     private boolean stop;
+    private String cryptionType;
 
-    public Game() {
+    public Cipher() {
         encryption = new Encryption();
+        decryption = new Decryption();
         word = "";
         cipher = "";
         stop = false;

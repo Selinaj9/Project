@@ -1,6 +1,6 @@
-public class RunGame {
+public class RunCipher {
     public static void main(String[] args) {
-        Game game = new Game();
+        Cipher game = new Cipher();
         game.play();
     }
 }
