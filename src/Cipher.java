@@ -7,40 +7,84 @@ public class Cipher {
     private Scanner scan = new Scanner(System.in);
     private String word;
     private String cipher;
-    private boolean stop;
     private String cryptionType;
+    private boolean encrypt;
+    private boolean decrypt;
 
     public Cipher() {
         encryption = new Encryption();
         decryption = new Decryption();
         word = "";
         cipher = "";
-        stop = false;
     }
 
     public void play() {
-        while (!stop) {
+        getMode();
+        while (encrypt) {
             System.out.print("Enter the word/sentence you would like to encrypt (lowercase only): ");
             word = scan.nextLine();
             System.out.print("Choose a cipher: " + Arrays.toString(encryption.getCipherTypes()) + " ");
             cipher = scan.nextLine();
-            if (cipher.equals("Caesar Cipher")) {
-                System.out.print("Enter number of shift: ");
-                int shift = scan.nextInt();
-                String encrypt = encryption.caesarCipher(word, shift);
-                System.out.println("The encrypted word is: " + encrypt);
-            } else if (cipher.equals("Atbash Cipher")) {
-                String encrypt = encryption.atbashCipher(word);
-                System.out.println("The encrypted word is: " + encrypt);
-            } else if (cipher.equals("Affine Cipher")) {
-                String encrypt = encryption.affineCipher(word);
-                System.out.println("The encrypted word is: " + encrypt);
-            }
+            System.out.println("The encrypted word is: " + getEncryption());
             System.out.println("Would you like to encrypt another word/sentence?");
             String ans = scan.nextLine();
             if (ans.equals("no")) {
-                stop = true;
+                encrypt = false;
             }
         }
+        while (decrypt) {
+            System.out.print("Enter the word/sentence you would like to decrypt (lowercase only): ");
+            word = scan.nextLine();
+            System.out.print("Choose a cipher: " + Arrays.toString(encryption.getCipherTypes()) + " ");
+            cipher = scan.nextLine();
+            System.out.println("The encrypted word is: " + getDecryption());
+            System.out.println();
+            System.out.println("Would you like to decrypt another word/sentence?");
+            String ans = scan.nextLine();
+            if (ans.equals("no")) {
+                decrypt = false;
+            }
+        }
+
+    }
+
+    public void getMode() {
+        System.out.println("Would you like to encrypt or decrypt a word: ");
+        String crypt = scan.nextLine();
+        if (crypt.equals("decrypt")) {
+            encrypt = false;
+            decrypt = true;
+        } else {
+            encrypt = true;
+            decrypt = false;
+        }
+    }
+
+     public String getEncryption() {
+         String encryptWord = "";
+        if (cipher.equals("Caesar Cipher")) {
+            System.out.print("Enter number of shift: ");
+            int shift = scan.nextInt();
+            encryptWord = encryption.caesarCipher(word, shift);
+        } else if (cipher.equals("Atbash Cipher")) {
+            encryptWord = encryption.atbashCipher(word);
+        } else if (cipher.equals("Affine Cipher")) {
+            encryptWord = encryption.affineCipher(word);
+        }
+        return encryptWord;
+    }
+
+    public String getDecryption() {
+        String encryptWord = "";
+        if (cipher.equals("Caesar Cipher")) {
+            System.out.print("Enter number of shift: ");
+            int shift = scan.nextInt();
+            encryptWord = decryption.caesarCipher(word, shift);
+        } else if (cipher.equals("Atbash Cipher")) {
+            encryptWord = decryption.atbashCipher(word);
+        } else if (cipher.equals("Affine Cipher")) {
+            encryptWord = decryption.affineCipher(word);
+        }
+        return encryptWord;
     }
 }
