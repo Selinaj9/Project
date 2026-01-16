@@ -2,12 +2,11 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Cipher {
-    private Encryption encryption;
-    private Decryption decryption;
-    private Scanner scan = new Scanner(System.in);
+    private final Encryption encryption;
+    private final Decryption decryption;
+    private final Scanner scan = new Scanner(System.in);
     private String word;
     private String cipher;
-    private String cryptionType;
     private boolean encrypt;
     private boolean decrypt;
 
@@ -48,7 +47,7 @@ public class Cipher {
 
     }
 
-    public void getMode() {
+    private void getMode() {
         System.out.println("Would you like to encrypt or decrypt a word: ");
         String crypt = scan.nextLine();
         if (crypt.equals("decrypt")) {
@@ -60,11 +59,12 @@ public class Cipher {
         }
     }
 
-     public String getEncryption() {
+     private String getEncryption() {
          String encryptWord = "";
         if (cipher.equals("Caesar Cipher")) {
             System.out.print("Enter number of shift: ");
             int shift = scan.nextInt();
+            scan.nextLine();
             encryptWord = encryption.caesarCipher(word, shift);
         } else if (cipher.equals("Atbash Cipher")) {
             encryptWord = encryption.atbashCipher(word);
@@ -74,11 +74,12 @@ public class Cipher {
         return encryptWord;
     }
 
-    public String getDecryption() {
+    private String getDecryption() {
         String encryptWord = "";
         if (cipher.equals("Caesar Cipher")) {
             System.out.print("Enter number of shift: ");
             int shift = scan.nextInt();
+            scan.nextLine();
             encryptWord = decryption.caesarCipher(word, shift);
         } else if (cipher.equals("Atbash Cipher")) {
             encryptWord = decryption.atbashCipher(word);

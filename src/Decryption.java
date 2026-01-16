@@ -1,10 +1,12 @@
 public class Decryption {
-    private String[] cipherTypes;
-    private String alphabet;
+    private final String[] cipherTypes;
+    private final Alphabet alphabet;
+    private String decryptedWord;
 
     public Decryption() {
         cipherTypes = new String[]{"Caesar Cipher", "Atbash Cipher", "Affine Cipher"};
-        alphabet = "abcdefghijklmnopqrstuvwxyz";
+        alphabet = new Alphabet();
+        decryptedWord = "";
     }
 
     public String[] getCipherTypes() {
@@ -12,55 +14,32 @@ public class Decryption {
     }
 
     public String caesarCipher(String word, int shift) {
-        String decrypt = "";
-        int id = alphabet.length() - shift;
-        String crypt = alphabet.substring(id) + alphabet.substring(0, id);
-        for (int i = 0; i < word.length(); i++) {
-            String letter = word.substring(i, i + 1);
-            if (!letter.matches("[a-zA-z]")) {
-                decrypt += letter;
-            } else {
-                int idx = alphabet.indexOf(letter);
-                decrypt += crypt.substring(idx, idx + 1);
-            }
-        }
-        return decrypt;
+        String crypt = alphabet.getCaesarAlphabet(shift);
+        return getDecryptedWord(word, crypt);
     }
 
     public String atbashCipher(String word) {
-        String encrypt = "";
-        String crypt = "";
-        for (int i = alphabet.length() - 1; i >= 0; i--) {
-            crypt += alphabet.substring(i, i + 1);
-        }
-        for (int i = 0; i < word.length(); i++) {
-            String letter = word.substring(i, i + 1);
-            if (!letter.matches("[a-zA-z]")) {
-                encrypt += letter;
-            } else {
-                int idx = crypt.indexOf(letter);
-                encrypt += alphabet.substring(idx, idx + 1);
-            }
-        }
-        return encrypt;
+        String crypt = alphabet.getAtbashAlphabet();
+        return getDecryptedWord(word,crypt);
     }
 
     public String affineCipher(String word) {
-        String encrypt = "";
-        String crypt = "";
-        for (int i = 0; i < alphabet.length(); i++) {
-            int idx = (5 * i + 8) % 26;
-            crypt += alphabet.substring(idx, idx + 1);
-        }
-        for (int i = 0; i < word.length(); i ++) {
+        String crypt = alphabet.getAffineAlphabet();
+        return getDecryptedWord(word,crypt);
+    }
+
+    private String getDecryptedWord(String word, String crypt) {
+        decryptedWord = "";
+        for (int i = 0; i < word.length(); i++) {
             String letter = word.substring(i, i + 1);
             if (!letter.matches("[a-zA-z]")) {
-                encrypt += letter;
+                decryptedWord += letter;
             } else {
+                String a = alphabet.getAlphabet();
                 int idx = crypt.indexOf(letter);
-                encrypt += alphabet.substring(idx, idx + 1);
+                decryptedWord += a.substring(idx, idx + 1);
             }
         }
-        return encrypt;
+        return decryptedWord;
     }
 }
