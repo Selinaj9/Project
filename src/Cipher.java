@@ -31,6 +31,7 @@ public class Cipher {
                 encrypt = false;
             }
         }
+
         while (decrypt) {
             System.out.print("Enter the word/sentence you would like to decrypt (lowercase only): ");
             word = scan.nextLine();
@@ -44,7 +45,6 @@ public class Cipher {
                 decrypt = false;
             }
         }
-
     }
 
     private void getMode() {
